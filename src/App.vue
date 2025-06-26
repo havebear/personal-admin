@@ -1,6 +1,6 @@
 <template>
   <el-config-provider :locale="zhCn">
-    <div></div>
+    <div>TEST</div>
   </el-config-provider>
 </template>
 
