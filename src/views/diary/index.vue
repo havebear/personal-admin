@@ -113,7 +113,7 @@
                   {{ tag }}
                 </el-tag>
               </div>
-              <div v-if="diary.moodScore" class="diary-mood">
+              <!-- <div v-if="diary.moodScore" class="diary-mood">
                 <span>心情:</span>
                 <el-rate
                   :model-value="diary.moodScore"
@@ -122,7 +122,7 @@
                   text-color="#ff9900"
                   score-template="{value}"
                 />
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -212,7 +212,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="心情评分">
+        <!-- <el-form-item label="心情评分">
           <el-rate
             v-model="diaryForm.moodScore"
             :max="5"
@@ -220,7 +220,7 @@
             text-color="#ff9900"
             score-template="{value}"
           />
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
 
       <template #footer>
@@ -246,7 +246,7 @@
       <div v-if="viewingDiary" class="diary-detail">
         <div class="detail-header">
           <div class="detail-date">{{ formatDate(viewingDiary.date) }}</div>
-          <div v-if="viewingDiary.moodScore" class="detail-mood">
+          <!-- <div v-if="viewingDiary.moodScore" class="detail-mood">
             <span>心情评分:</span>
             <el-rate
               :model-value="viewingDiary.moodScore"
@@ -255,7 +255,7 @@
               text-color="#ff9900"
               score-template="{value}"
             />
-          </div>
+          </div> -->
         </div>
         <div class="detail-content">{{ viewingDiary.content }}</div>
         <div class="detail-tags">
@@ -297,7 +297,7 @@ const diaryForm = reactive<CreateDiaryParams>({
   content: '',
   date: dayjs().format('YYYY-MM-DD'),
   tags: [],
-  moodScore: undefined
+  // moodScore: undefined
 })
 
 // 表单验证规则
@@ -351,7 +351,7 @@ const resetForm = () => {
   diaryForm.content = ''
   diaryForm.date = dayjs().format('YYYY-MM-DD')
   diaryForm.tags = []
-  diaryForm.moodScore = undefined
+  // diaryForm.moodScore = undefined
   editingDiary.value = null
 }
 
@@ -383,7 +383,7 @@ const editDiary = (diary: Diary) => {
   diaryForm.content = diary.content
   diaryForm.date = diary.date
   diaryForm.tags = [...diary.tags]
-  diaryForm.moodScore = diary.moodScore
+  // diaryForm.moodScore = diary.moodScore
   showCreateDialog.value = true
 }
 

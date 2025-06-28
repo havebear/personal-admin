@@ -24,7 +24,7 @@ export interface RegisterParams {
 // 登录响应
 export interface LoginResponse {
   user: User
-  token: string
+  accessToken: string
 }
 
 // 认证API
