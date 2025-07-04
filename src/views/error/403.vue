@@ -44,7 +44,7 @@ const goHome = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f5f7fa;
+  background: var(--el-bg-color-page);
   padding: 20px;
 }
 
@@ -80,13 +80,13 @@ const goHome = () => {
 .error-subtitle {
   font-size: 24px;
   font-weight: 600;
-  color: #303133;
+  color: var(--el-text-color-primary);
   margin: 0 0 16px 0;
 }
 
 .error-description {
   font-size: 16px;
-  color: #606266;
+  color: var(--el-text-color-regular);
   margin: 0 0 32px 0;
   line-height: 1.6;
 }

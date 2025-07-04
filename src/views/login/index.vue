@@ -231,9 +231,9 @@ const handleRegister = async () => {
 }
 
 .login-card {
-  background: #fff;
+  background: var(--el-bg-color);
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--el-box-shadow);
   padding: 40px;
   width: 100%;
   max-width: 400px;
@@ -259,13 +259,13 @@ const handleRegister = async () => {
 .login-title {
   font-size: 28px;
   font-weight: 600;
-  color: #303133;
+  color: var(--el-text-color-primary);
   margin: 0 0 8px 0;
 }
 
 .login-subtitle {
   font-size: 14px;
-  color: #909399;
+  color: var(--el-text-color-regular);
   margin: 0;
 }
 
@@ -286,7 +286,7 @@ const handleRegister = async () => {
 
 .register-tip {
   font-size: 14px;
-  color: #606266;
+  color: var(--el-text-color-regular);
   margin: 0;
 }
 
@@ -295,14 +295,14 @@ const handleRegister = async () => {
 }
 
 :deep(.el-input__wrapper) {
-  box-shadow: 0 0 0 1px #dcdfe6 inset;
+  box-shadow: 0 0 0 1px var(--el-border-color-light) inset;
 }
 
 :deep(.el-input__wrapper:hover) {
-  box-shadow: 0 0 0 1px #c0c4cc inset;
+  box-shadow: 0 0 0 1px var(--el-border-color) inset;
 }
 
 :deep(.el-input__wrapper.is-focus) {
-  box-shadow: 0 0 0 1px #409eff inset;
+  box-shadow: 0 0 0 1px var(--el-color-primary) inset;
 }
 </style>

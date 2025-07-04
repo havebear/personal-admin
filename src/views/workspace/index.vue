@@ -63,8 +63,8 @@
           </el-icon>
         </div>
         <div class="stat-content">
-          <div class="stat-number">{{ averageMoodScore }}</div>
-          <div class="stat-label">平均心情</div>
+          <div class="stat-number">{{ writingStreak }}</div>
+          <div class="stat-label">连续写作</div>
         </div>
       </div>
     </div>
@@ -101,14 +101,6 @@
               <span v-if="diary.tags.length > 2" class="more-tags">
                 +{{ diary.tags.length - 2 }}
               </span>
-            </div>
-            <div v-if="diary.moodScore" class="diary-mood">
-              <el-rate
-                :model-value="diary.moodScore"
-                disabled
-                size="small"
-                text-color="#ff9900"
-              />
             </div>
           </div>
         </div>
@@ -158,16 +150,6 @@
       <div v-if="viewingDiary" class="diary-detail">
         <div class="detail-header">
           <div class="detail-date">{{ formatDate(viewingDiary.date) }}</div>
-          <div v-if="viewingDiary.moodScore" class="detail-mood">
-            <span>心情评分:</span>
-            <el-rate
-              :model-value="viewingDiary.moodScore"
-              disabled
-              show-score
-              text-color="#ff9900"
-              score-template="{value}"
-            />
-          </div>
         </div>
         <div class="detail-content">{{ viewingDiary.content }}</div>
         <div class="detail-tags">
@@ -227,12 +209,28 @@ const todayDiaryCount = computed(() => {
   return diaryStore.diaries.filter(diary => diary.date === today).length
 })
 
-const averageMoodScore = computed(() => {
-  const diariesWithMood = diaryStore.diaries.filter(diary => diary.moodScore)
-  if (diariesWithMood.length === 0) return '暂无'
+const writingStreak = computed(() => {
+  // 简单的连续写作天数计算
+  const sortedDiaries = [...diaryStore.diaries].sort((a, b) => 
+    dayjs(b.date).valueOf() - dayjs(a.date).valueOf()
+  )
   
-  const totalScore = diariesWithMood.reduce((sum, diary) => sum + (diary.moodScore || 0), 0)
-  return (totalScore / diariesWithMood.length).toFixed(1)
+  if (sortedDiaries.length === 0) return 0
+  
+  let streak = 0
+  let currentDate = dayjs()
+  
+  for (const diary of sortedDiaries) {
+    const diaryDate = dayjs(diary.date)
+    if (currentDate.diff(diaryDate, 'day') <= 1) {
+      streak++
+      currentDate = diaryDate
+    } else {
+      break
+    }
+  }
+  
+  return streak
 })
 
 // 方法
@@ -258,7 +256,7 @@ onMounted(async () => {
   try {
     await Promise.all([
       diaryStore.fetchDiaries({ page: 1, limit: 10 }),
-      diaryStore.fetchOnThisDay(dayjs().format('YYYY-MM-DD'))
+      diaryStore.fetchOnThisDay(dayjs().format('MM-DD'))
     ])
   } catch (error) {
     console.error('初始化工作台数据失败:', error)
@@ -303,10 +301,10 @@ onMounted(async () => {
 }
 
 .stat-card {
-  background: #fff;
+  background: var(--el-bg-color);
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--el-box-shadow-light);
   display: flex;
   align-items: center;
   gap: 16px;
@@ -315,7 +313,7 @@ onMounted(async () => {
 
 .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--el-box-shadow);
 }
 
 .stat-icon {
@@ -329,23 +327,23 @@ onMounted(async () => {
 .stat-number {
   font-size: 32px;
   font-weight: 700;
-  color: #303133;
+  color: var(--el-text-color-primary);
   line-height: 1;
   margin-bottom: 4px;
 }
 
 .stat-label {
   font-size: 14px;
-  color: #909399;
+  color: var(--el-text-color-regular);
 }
 
 .recent-section,
 .on-this-day-section {
-  background: #fff;
+  background: var(--el-bg-color);
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--el-box-shadow-light);
 }
 
 .section-header {
@@ -359,12 +357,12 @@ onMounted(async () => {
   margin: 0;
   font-size: 20px;
   font-weight: 600;
-  color: #303133;
+  color: var(--el-text-color-primary);
 }
 
 .section-subtitle {
   font-size: 14px;
-  color: #909399;
+  color: var(--el-text-color-regular);
 }
 
 .recent-diaries {
@@ -375,26 +373,26 @@ onMounted(async () => {
 
 .recent-diary-item {
   padding: 16px;
-  border: 1px solid #e4e7ed;
+  border: 1px solid var(--el-border-color-light);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s;
 }
 
 .recent-diary-item:hover {
-  border-color: #409eff;
-  box-shadow: 0 2px 8px rgba(64, 158, 255, 0.1);
+  border-color: var(--el-color-primary);
+  box-shadow: var(--el-box-shadow-light);
 }
 
 .diary-date {
   font-size: 12px;
-  color: #909399;
+  color: var(--el-text-color-regular);
   margin-bottom: 8px;
 }
 
 .diary-content {
   font-size: 14px;
-  color: #606266;
+  color: var(--el-text-color-regular);
   line-height: 1.5;
   margin-bottom: 12px;
   display: -webkit-box;
@@ -417,12 +415,7 @@ onMounted(async () => {
 
 .more-tags {
   font-size: 12px;
-  color: #909399;
-}
-
-.diary-mood {
-  display: flex;
-  align-items: center;
+  color: var(--el-text-color-regular);
 }
 
 .empty-recent {
@@ -438,7 +431,7 @@ onMounted(async () => {
 
 .on-this-day-item {
   padding: 16px;
-  border: 1px solid #e4e7ed;
+  border: 1px solid var(--el-border-color-light);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s;
@@ -446,15 +439,15 @@ onMounted(async () => {
 }
 
 .on-this-day-item:hover {
-  border-color: #e6a23c;
-  box-shadow: 0 2px 8px rgba(230, 162, 60, 0.1);
+  border-color: var(--el-color-warning);
+  box-shadow: var(--el-box-shadow-light);
 }
 
 .year-badge {
   position: absolute;
   top: -8px;
   right: 16px;
-  background: #e6a23c;
+  background: var(--el-color-warning);
   color: white;
   padding: 4px 8px;
   border-radius: 12px;
@@ -472,27 +465,19 @@ onMounted(async () => {
   align-items: center;
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #e4e7ed;
+  border-bottom: 1px solid var(--el-border-color-light);
 }
 
 .detail-date {
   font-size: 16px;
   font-weight: 600;
-  color: #303133;
-}
-
-.detail-mood {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #606266;
+  color: var(--el-text-color-primary);
 }
 
 .detail-content {
   font-size: 14px;
   line-height: 1.6;
-  color: #606266;
+  color: var(--el-text-color-regular);
   margin-bottom: 16px;
   white-space: pre-wrap;
 }
