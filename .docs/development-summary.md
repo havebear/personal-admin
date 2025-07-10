@@ -277,7 +277,7 @@ export default {
 // 语言切换
 const changeLocale = (lang: string) => {
   locale.value = lang
-  localStorage.setItem('locale', lang)
+  localStorage.setItem('CATCH_LOCALE', lang)
 }
 
 // 使用示例

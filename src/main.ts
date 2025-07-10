@@ -1,22 +1,22 @@
+import dayjs from 'dayjs'
+import App from './App.vue'
+import router from './router/index'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import './style.css'
-import router from './router/index'
-import { setupRouterGuard } from './router/guard'
-import dayjs from 'dayjs'
-import 'dayjs/locale/zh-cn'
-import App from './App.vue'
 import { createI18n } from 'vue-i18n'
+import { setupRouterGuard } from './router/guard'
 import { messages } from './locales'
+import { CATCH_LOCALE } from './config/catch.config'
+import 'dayjs/locale/zh-cn'
+import './style.css'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 // 配置dayjs
 // dayjs.locale('zh-cn') // 由 i18n 控制
 
-import 'element-plus/theme-chalk/dark/css-vars.css'
-
 // 获取本地语言
 const getDefaultLocale = () => {
-  const saved = localStorage.getItem('locale')
+  const saved = localStorage.getItem(CATCH_LOCALE)
   if (saved) return saved
   const lang = navigator.language.toLowerCase()
   return lang.includes('zh') ? 'zh-CN' : 'en-US'

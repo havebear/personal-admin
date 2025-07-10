@@ -27,60 +27,17 @@ export interface LoginResponse {
   accessToken: string
 }
 
-// 模拟用户数据
-const mockUser: User = {
-  id: '1',
-  email: 'test@example.com',
-  avatar: '',
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString()
-}
-
-const mockToken = 'mock-jwt-token-' + Date.now()
-
 // 认证API
 export const authApi = {
   // 用户注册
-  register: async (data: RegisterParams) => {
-    // 模拟注册
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    if (data.email === 'error@example.com') {
-      throw new Error('注册失败，邮箱已存在')
-    }
-    
-    return {
-      data: {
-        user: mockUser,
-        token: mockToken
-      }
-    }
-  },
+  register: (data: RegisterParams) =>
+    http.post<{ user: User; token: string }>('/api/auth/register', data),
 
   // 用户登录
-  login: async (data: LoginParams) => {
-    // 模拟登录
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    if (data.email === 'error@example.com' || data.password === 'wrong') {
-      throw new Error('登录失败，邮箱或密码错误')
-    }
-    
-    return {
-      data: {
-        user: mockUser,
-        accessToken: mockToken
-      }
-    }
-  },
+  login: (data: LoginParams) =>
+    http.post<LoginResponse>('/api/auth/login', data),
 
   // 获取用户信息
-  getProfile: async () => {
-    // 模拟获取用户信息
-    await new Promise(resolve => setTimeout(resolve, 500))
-    
-    return {
-      data: mockUser
-    }
-  },
+  getProfile: () =>
+    http.get<User>('/api/auth/profile'),
 } 

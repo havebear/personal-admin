@@ -69,7 +69,8 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { ArrowDown, SwitchButton, House, Notebook, Setting } from '@element-plus/icons-vue'
 import { useUserStore } from '../../stores/user'
 import { useI18n } from 'vue-i18n'
-import ThemeToggle from '../../components/ThemeToggle.vue'
+import ThemeToggle from '@/components/ThemeToggle.vue'
+import { CATCH_LOCALE } from '@/config/catch.config'
 
 const route = useRoute()
 const router = useRouter()
@@ -113,7 +114,7 @@ const handleClickOutside = (event: Event) => {
 
 const changeLocale = (lang: string) => {
   locale.value = lang
-  localStorage.setItem('locale', lang)
+  localStorage.setItem(CATCH_LOCALE, lang)
   // 可选：同步 dayjs 语言
   // import dayjs from 'dayjs'
   // dayjs.locale(lang === 'zh-CN' ? 'zh-cn' : 'en')

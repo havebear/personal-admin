@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { authApi, type User, type LoginParams, type RegisterParams } from '../api/auth'
+import { CATCH_TOKEN, CATCH_USER_INFO } from '../config/catch.config'
 
 export const useUserStore = defineStore('user', () => {
   // 状态
   const user = ref<User | null>(null)
-  const token = ref<string | null>(localStorage.getItem('token'))
+  const token = ref<string | null>(localStorage.getItem(CATCH_TOKEN))
   const loading = ref(false)
 
   // 计算属性
@@ -16,15 +17,14 @@ export const useUserStore = defineStore('user', () => {
     try {
       loading.value = true
       const response = await authApi.login(params)
-      console.log(response)
       
       // 保存用户信息和token
       user.value = response.data.user
       token.value = response.data.accessToken
       
       // 保存到localStorage
-      localStorage.setItem('token', response.data.accessToken)
-      localStorage.setItem('user', JSON.stringify(response.data.user))
+      localStorage.setItem(CATCH_TOKEN, response.data.accessToken)
+      localStorage.setItem(CATCH_USER_INFO, JSON.stringify(response.data.user))
       
       return response
     } catch (error) {
@@ -45,8 +45,8 @@ export const useUserStore = defineStore('user', () => {
       token.value = response.data.token
       
       // 保存到localStorage
-      localStorage.setItem('token', response.data.token)
-      localStorage.setItem('user', JSON.stringify(response.data.user))
+      localStorage.setItem(CATCH_TOKEN, response.data.token)
+      localStorage.setItem(CATCH_USER_INFO, JSON.stringify(response.data.user))
       
       return response
     } catch (error) {
@@ -74,8 +74,8 @@ export const useUserStore = defineStore('user', () => {
   const logout = () => {
     user.value = null
     token.value = null
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
+    localStorage.removeItem(CATCH_TOKEN)
+    localStorage.removeItem(CATCH_USER_INFO)
   }
 
   // 初始化用户信息
