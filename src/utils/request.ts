@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { API_BASE_URL, REQUEST_TIMEOUT, type ApiResponse } from '../config/api'
+import { CATCH_TOKEN, CATCH_USER_INFO } from '../config/catch.config'
 
 // 创建axios实例
 const request: AxiosInstance = axios.create({
@@ -15,7 +16,7 @@ const request: AxiosInstance = axios.create({
 request.interceptors.request.use(
   (config) => {
     // 从localStorage获取token
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem(CATCH_TOKEN)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -34,8 +35,8 @@ request.interceptors.response.use(
   (error) => {
     // 处理401未授权错误
     if (error.response?.status === 401) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
+      localStorage.removeItem(CATCH_TOKEN)
+      localStorage.removeItem(CATCH_USER_INFO)
       // 可以在这里添加重定向到登录页的逻辑
       window.location.href = '/login'
     }

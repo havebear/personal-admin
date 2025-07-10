@@ -120,7 +120,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
-import { useUserStore } from '../../stores/user'
+import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -157,14 +157,7 @@ const loginRules: FormRules = {
 
 // 注册验证规则
 const registerRules: FormRules = {
-  email: [
-    { required: true, message: '请输入邮箱', trigger: 'blur' },
-    { type: 'email', message: '请输入正确的邮箱格式', trigger: 'blur' }
-  ],
-  password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, message: '密码长度不能少于6位', trigger: 'blur' }
-  ],
+  ...loginRules,
   confirmPassword: [
     { required: true, message: '请确认密码', trigger: 'blur' },
     {
@@ -202,16 +195,16 @@ const handleRegister = async () => {
 
   try {
     await registerFormRef.value.validate()
-    await userStore.register({
-      email: registerForm.email,
-      password: registerForm.password
-    })
+    await userStore.register(registerForm)
     ElMessage.success('注册成功')
     showRegister.value = false
     // 清空注册表单
-    registerForm.email = ''
-    registerForm.password = ''
-    registerForm.confirmPassword = ''
+    
+    Object.assign(registerForm, {
+      email: '',
+      password: '',
+      confirmPassword: ''
+    })
   } catch (error: any) {
     if (error.message) {
       ElMessage.error(error.message)
@@ -220,89 +213,6 @@ const handleRegister = async () => {
 }
 </script>
 
-<style scoped>
-.login-container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.login-card {
-  background: var(--el-bg-color);
-  border-radius: 12px;
-  box-shadow: var(--el-box-shadow);
-  padding: 40px;
-  width: 100%;
-  max-width: 400px;
-  animation: slideIn 0.6s ease-out;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.login-header {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.login-title {
-  font-size: 28px;
-  font-weight: 600;
-  color: var(--el-text-color-primary);
-  margin: 0 0 8px 0;
-}
-
-.login-subtitle {
-  font-size: 14px;
-  color: var(--el-text-color-regular);
-  margin: 0;
-}
-
-.login-form {
-  margin-bottom: 20px;
-}
-
-.login-button {
-  width: 100%;
-  height: 44px;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.login-footer {
-  text-align: center;
-}
-
-.register-tip {
-  font-size: 14px;
-  color: var(--el-text-color-regular);
-  margin: 0;
-}
-
-.dialog-footer {
-  text-align: right;
-}
-
-:deep(.el-input__wrapper) {
-  box-shadow: 0 0 0 1px var(--el-border-color-light) inset;
-}
-
-:deep(.el-input__wrapper:hover) {
-  box-shadow: 0 0 0 1px var(--el-border-color) inset;
-}
-
-:deep(.el-input__wrapper.is-focus) {
-  box-shadow: 0 0 0 1px var(--el-color-primary) inset;
-}
+<style scoped lang="scss">
+@import './index.scss';
 </style>
