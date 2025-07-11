@@ -68,7 +68,7 @@
           v-for="diary in selectedDayDiaries"
           :key="diary.id"
           class="diary-item"
-          @click="$emit('diary-click', diary)"
+          @click="$emit('diaryClick', diary)"
         >
           <div class="diary-content">{{ diary.content }}</div>
           <div class="diary-tags">

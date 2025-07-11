@@ -57,9 +57,9 @@ interface Props {
   diary: Diary
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
-const emit = defineEmits<{
+defineEmits<{
   edit: [diary: Diary]
   delete: [diary: Diary]
 }>()

@@ -106,7 +106,7 @@
       <div v-if="hasMore" class="load-more">
         <el-button
           :loading="loading"
-          @click="$emit('load-more')"
+          @click="$emit('loadMore')"
         >
           {{ $t('common.loadMore') }}
         </el-button>
@@ -195,7 +195,7 @@ const toggleTag = (tag: string) => {
 }
 
 // 监听标签统计变化，更新可用标签
-watch(() => props.tagStats, (newTagStats) => {
+watch(() => props.tagStats, () => {
   // 可以在这里添加逻辑来处理标签统计的变化
 }, { deep: true })
 </script>

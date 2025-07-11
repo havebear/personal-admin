@@ -36,7 +36,7 @@
           v-for="diary in onThisDay.diaries"
           :key="diary.id"
           class="diary-item"
-          @click="$emit('diary-click', diary)"
+          @click="$emit('diaryClick', diary)"
         >
           <div class="diary-header">
             <div class="diary-year">{{ getYear(diary.date) }}</div>
@@ -61,7 +61,7 @@
               <el-button
                 type="text"
                 size="small"
-                @click.stop="$emit('diary-click', diary)"
+                @click.stop="$emit('diaryClick', diary)"
               >
                 {{ $t('common.view') }}
               </el-button>
@@ -104,7 +104,7 @@ interface Props {
   onThisDay: OnThisDay | null
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const emit = defineEmits<{
   dateChange: [date: string]

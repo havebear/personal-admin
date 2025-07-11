@@ -95,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import { useDiaryStore } from '../../stores/diary'
@@ -170,7 +170,13 @@ const handleOnThisDayDateChange = async (date: string) => {
 }
 
 const handleStatsYearChange = async (year: number) => {
-  await diaryStore.fetchFrequencyStats({ year })
+  const startDate = `${year}-01-01`
+  const endDate = `${year}-12-31`
+  await diaryStore.fetchFrequencyStats({ 
+    frequency: 'daily',
+    startDate,
+    endDate
+  })
 }
 
 const handleTagClick = (tag: string) => {
@@ -237,12 +243,20 @@ const deleteDiary = async (diary: Diary) => {
 // 生命周期
 onMounted(async () => {
   try {
+    const currentYear = dayjs().year()
+    const startDate = `${currentYear}-01-01`
+    const endDate = `${currentYear}-12-31`
+    
     await Promise.all([
       diaryStore.fetchDiaries({ page: 1, limit: 10 }),
       diaryStore.fetchTags(),
       diaryStore.fetchTagStats(),
       diaryStore.fetchOnThisDay(dayjs().format('YYYY-MM-DD')),
-      diaryStore.fetchFrequencyStats({ year: dayjs().year() })
+      diaryStore.fetchFrequencyStats({ 
+        frequency: 'daily',
+        startDate,
+        endDate
+      })
     ])
   } catch (error) {
     console.error('初始化数据失败:', error)

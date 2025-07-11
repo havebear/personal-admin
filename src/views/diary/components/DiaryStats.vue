@@ -110,7 +110,7 @@
           v-for="tagStat in tagStats"
           :key="tagStat.tag"
           class="tag-stat-item"
-          @click="$emit('tag-click', tagStat.tag)"
+          @click="$emit('tagClick', tagStat.tag)"
         >
           <div class="tag-info">
             <span class="tag-name">{{ tagStat.tag }}</span>
