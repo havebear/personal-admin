@@ -31,7 +31,7 @@
       </div>
 
       <!-- 日记列表 -->
-      <div v-if="onThisDay.diaries.length > 0" class="diary-list">
+      <div v-if="onThisDay?.diaries?.length > 0" class="diary-list">
         <div
           v-for="diary in onThisDay.diaries"
           :key="diary.id"
@@ -59,7 +59,7 @@
             
             <div class="diary-actions">
               <el-button
-                type="text"
+                type="primary"
                 size="small"
                 @click.stop="$emit('diaryClick', diary)"
               >

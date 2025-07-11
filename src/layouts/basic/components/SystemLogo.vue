@@ -21,7 +21,8 @@ import { Document } from '@element-plus/icons-vue'
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px 20px;
+  // padding: 16px;
+  // padding: 0 var(--el-menu-base-level-padding);
   cursor: pointer;
   transition: all 0.3s ease;
   

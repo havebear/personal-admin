@@ -22,8 +22,8 @@ import UserInfo from '../components/UserInfo.vue'
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 var(--el-menu-base-level-padding);
   background-color: var(--el-menu-bg-color);
-  border-bottom: 1px solid var(--el-menu-border-color);
+  border-bottom: 1px solid var(--el-border-color-light);
 }
 </style>

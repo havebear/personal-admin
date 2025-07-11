@@ -72,14 +72,14 @@
           <div class="diary-date">{{ formatDate(diary.date) }}</div>
           <div class="diary-actions">
             <el-button
-              type="text"
+              type="primary"
               size="small"
               @click.stop="$emit('edit', diary)"
             >
               {{ $t('common.edit') }}
             </el-button>
             <el-button
-              type="text"
+              type="danger"
               size="small"
               @click.stop="$emit('delete', diary)"
             >
