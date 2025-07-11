@@ -2,8 +2,10 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { authApi, type User, type LoginParams, type RegisterParams } from '../api/auth'
 import { CATCH_TOKEN, CATCH_USER_INFO } from '../config/catch.config'
+import { useRouter } from 'vue-router'
 
 export const useUserStore = defineStore('user', () => {
+  const router = useRouter()
   // 状态
   const user = ref<User | null>(null)
   const token = ref<string | null>(localStorage.getItem(CATCH_TOKEN))
@@ -76,6 +78,7 @@ export const useUserStore = defineStore('user', () => {
     token.value = null
     localStorage.removeItem(CATCH_TOKEN)
     localStorage.removeItem(CATCH_USER_INFO)
+    router.push('/login')
   }
 
   // 初始化用户信息
