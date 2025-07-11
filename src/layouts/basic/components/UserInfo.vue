@@ -1,10 +1,7 @@
 <template>
   <el-dropdown @command="handleCommand">
     <span class="user-info">
-      <el-avatar :size="32" :src="userStore.user?.avatar">
-        {{ userStore.user?.email?.charAt(0).toUpperCase() || 'U' }}
-      </el-avatar>
-      <span class="user-name">{{ userStore.user?.email || 'User' }}</span>
+      <span>{{ userStore.user?.email }}</span>
       <el-icon class="dropdown-icon"><ArrowDown /></el-icon>
     </span>
     <template #dropdown>
@@ -53,49 +50,10 @@ const handleCommand = (command: string) => {
 .user-info {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  background: var(--el-fill-color-light);
-  border: 1px solid transparent;
-  
-  &:hover {
-    background: var(--el-fill-color);
-    border-color: var(--el-border-color);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .user-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--el-text-color-primary);
-    max-width: 120px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
-  .dropdown-icon {
-    font-size: 12px;
-    color: var(--el-text-color-regular);
-    transition: transform 0.3s ease;
-  }
-  
-  &:hover .dropdown-icon {
-    transform: rotate(180deg);
-  }
-}
-
-:deep(.el-dropdown-menu__item) {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  
-  .el-icon {
-    font-size: 16px;
-  }
+  user-select: none;
+  padding: 0 12px;
 }
 </style>

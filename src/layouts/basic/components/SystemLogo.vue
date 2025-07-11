@@ -1,7 +1,7 @@
 <template>
   <div class="system-logo">
     <div class="logo-icon">
-      <el-icon size="28" color="var(--el-color-primary)">
+      <el-icon size="20" color="var(--el-color-primary)">
         <Document />
       </el-icon>
     </div>
@@ -40,8 +40,8 @@ import { Document } from '@element-plus/icons-vue'
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     background: var(--el-color-primary-light-9);
     border-radius: 10px;
     transition: all 0.3s ease;

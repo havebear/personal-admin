@@ -18,7 +18,7 @@ import UserInfo from '../components/UserInfo.vue'
 
 <style scoped lang="scss">
 .header {
-  height: 50px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
