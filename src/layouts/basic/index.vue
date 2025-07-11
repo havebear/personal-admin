@@ -21,6 +21,7 @@ import LayoutAside from './aside/index.vue'
   height: 100%;
   display: flex;
   flex-direction: column;
+  // background-color: var(--el-bg-color);
   &-container {
     flex: 1;
     display: flex;
@@ -30,7 +31,7 @@ import LayoutAside from './aside/index.vue'
     min-width: 0;
     flex: 1;
     height: 100%;
-    padding: 16px;
+    padding: 10px;
     overflow: auto;
   }
 }

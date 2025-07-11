@@ -54,7 +54,7 @@ import { Document } from '@element-plus/icons-vue'
   }
   
   .logo-text {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--el-text-color-primary);
     transition: color 0.3s ease;

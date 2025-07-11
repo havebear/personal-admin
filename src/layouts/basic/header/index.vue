@@ -18,12 +18,13 @@ import UserInfo from '../components/UserInfo.vue'
 
 <style scoped lang="scss">
 .header {
-  height: 60px;
+  height: 50px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--el-menu-base-level-padding);
-  background-color: var(--el-menu-bg-color);
+  background-color: var(--el-bg-color);
   border-bottom: 1px solid var(--el-border-color-light);
 }
 </style>
